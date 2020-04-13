@@ -1,7 +1,10 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . './vendor/autoload.php';
 
-$model = new \ComposerTest\ComposerTest1();
 
-$model->index();
+$model = new \ElasticsearchModel\EcommerceEs();
+
+$res = $model->setTotal()->setPaginate(0, 1)->search()
+    ->transform(new \ElasticsearchModel\Transformers\TempCommonPaginationCustom());
+dd($res);
