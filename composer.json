@@ -1,0 +1,31 @@
+{
+    "name": "chris-composer/elasticsearch-model",
+    "description": "elasticsearch 模型",
+    "authors": [
+        {
+            "name": "gale boy",
+            "email": "983943198@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "LGPL-3.0+",
+    "require": {
+        "php": "^7.1.3",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "laravel/framework": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ComposerTest\\": "./src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ComposerTest\\Provider\\ComposerTestServiceProvider"
+            ]
+        }
+    }
+}
