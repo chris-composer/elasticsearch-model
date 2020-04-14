@@ -100,7 +100,7 @@ class ModelEs implements ModelEsInterface
      *
      * @param $body
      */
-    public function setHead($input)
+    public function setHead(array $input)
     {
         $this->params_head = $input;
 
@@ -112,7 +112,7 @@ class ModelEs implements ModelEsInterface
      *
      * @param $body
      */
-    public function setBody($body)
+    public function setBody(array $body)
     {
         $this->params_body = $body;
 
@@ -252,12 +252,16 @@ class ModelEs implements ModelEsInterface
         $this->params['type'] = $this->type;
 
         # set head
-        foreach ($this->params_head as $k => $v) {
-            $this->params[$k] = $v;
+        if ($this->params_head) {
+            foreach ($this->params_head as $k => $v) {
+                $this->params[$k] = $v;
+            }
         }
 
         # set body
-        $this->params['body'] = $this->params_body;
+        if ($this->params_body) {
+            $this->params['body'] = $this->params_body;
+        }
 
         return $this;
     }
@@ -270,6 +274,13 @@ class ModelEs implements ModelEsInterface
      */
     public function __call($name, $params)
     {
+        # 若是 get 方法，则 setHead()
+        if ($name === 'get') {
+            $this->setHead([
+                'id' => $params[0]
+            ]);
+        }
+        
         # 创建 params
         $this->createParams();
 
