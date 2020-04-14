@@ -34,6 +34,7 @@ class ModelEs implements ModelEsInterface
     protected $refresh = false; // 强制更新参数
 
     protected $params = [];
+    protected $params_head = [];
     protected $params_body = [];
 
     public $result; // 执行结果
@@ -92,6 +93,18 @@ class ModelEs implements ModelEsInterface
     public function transform(CustomTransformInterface $transformer)
     {
         return $this->custom_transform($this->result, $transformer, $this->page, $this->limit);
+    }
+
+    /**
+     * 自定义 head 字段，如：id, refresh
+     *
+     * @param $body
+     */
+    public function setHead($input)
+    {
+        $this->params_head = $input;
+
+        return $this;
     }
 
     /**
@@ -154,6 +167,19 @@ class ModelEs implements ModelEsInterface
     }
 
     /**
+     * 设置 from
+     */
+    public function setFrom(int $input)
+    {
+        # 处理输入错误
+        $num = max(0, $input);
+        $this->from = $num;
+        $this->params['from'] = $num;
+
+        return $this;
+    }
+
+    /**
      * 设置 size
      */
     public function setSize(int $input)
@@ -178,7 +204,7 @@ class ModelEs implements ModelEsInterface
     {
         $this->page = max($page, 1);
         $this->limit = $limit;
-        
+
         $this->from = ($this->page - 1) * $limit;
         $this->size = $limit;
 
@@ -221,8 +247,16 @@ class ModelEs implements ModelEsInterface
      */
     protected function createParams()
     {
+        # set index, type
         $this->params['index'] = $this->config['prefix'] . $this->index;
         $this->params['type'] = $this->type;
+
+        # set head
+        foreach ($this->params_head as $k => $v) {
+            $this->params[$k] = $v;
+        }
+
+        # set body
         $this->params['body'] = $this->params_body;
 
         return $this;
