@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ModelsEs;
+namespace ElasticsearchModel\Models;
 
 use ElasticsearchModel\Models\ModelEs;
 
