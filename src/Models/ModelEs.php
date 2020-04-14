@@ -203,18 +203,16 @@ class ModelEs implements ModelEsInterface
     }
 
     /**
-     * 去重统计总数
+     * collapse 去重统计总数
      *
      * @param $field
      */
     public function setTotalCollapse($field)
     {
-        $this->params_body['aggs'] = [
-            'total_collapse' => [
-                'cardinality' => [
-                    'field' => $field
-                ]
-            ],
+        $this->params_body['aggs']['total_collapse'] = [
+            'cardinality' => [
+                'field' => $field
+            ]
         ];
     }
 
