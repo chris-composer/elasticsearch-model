@@ -131,6 +131,12 @@ class ModelEs implements ModelEsInterface
         return $this;
     }
 
+    /**
+     * 设置高亮
+     * @param $input
+     *
+     * @return $this
+     */
     public function setHighlight($input)
     {
         if (is_string($input)) {
@@ -143,6 +149,19 @@ class ModelEs implements ModelEsInterface
         elseif (is_array($input)) {
             $this->params_body['highlight'] = $input;
         }
+
+        return $this;
+    }
+
+    /**
+     * 设置 size
+     */
+    public function setSize(int $input)
+    {
+        # 处理输入错误
+        $num = max(0, $input);
+        $this->size = $num;
+        $this->params['size'] = $num;
 
         return $this;
     }
