@@ -176,10 +176,10 @@ class ModelEs implements ModelEsInterface
      */
     public function setPaginate($page = 1, $limit = 10)
     {
-        $this->page = $page;
+        $this->page = max($page, 1);
         $this->limit = $limit;
-
-        $this->from = (max($page, 1) - 1) * $limit;
+        
+        $this->from = ($this->page - 1) * $limit;
         $this->size = $limit;
 
         $this->params['from'] = $this->from;
