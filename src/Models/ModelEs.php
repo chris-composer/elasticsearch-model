@@ -22,6 +22,7 @@ class ModelEs implements ModelEsInterface
     protected $config; // 配置
     protected $connection; // 连接
     protected $index; // 索引
+    protected $add_indexs = []; // 增加的索引
     protected $type = '_doc';
 
     protected $page;
@@ -103,6 +104,18 @@ class ModelEs implements ModelEsInterface
     public function setHead(array $input)
     {
         $this->params_head = $input;
+
+        return $this;
+    }
+    
+    /**
+     * 增加 index
+     *
+     * @param $body
+     */
+    public function addIndex(array $input)
+    {
+        $this->add_indexs = $input;
 
         return $this;
     }
@@ -247,8 +260,15 @@ class ModelEs implements ModelEsInterface
      */
     protected function createParams()
     {
-        # set index, type
-        $this->params['index'] = $this->config['prefix'] . $this->index;
+        # set index
+        $index = $this->config['prefix'] . $this->index;
+        // 若有增加的索引加上去
+        if ($this->add_indexs) {
+            $index .= ',' . implode(',', $this->add_indexs);
+        }
+        $this->params['index'] = $index;
+        
+        # set type
         $this->params['type'] = $this->type;
 
         # set head
