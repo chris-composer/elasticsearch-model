@@ -33,7 +33,8 @@ class ModelEs implements ModelEsInterface
     protected $max_handles = 100; // 批次大小
     protected $retry; // 重试次数，不设默认等于你集群的节点数
     protected $refresh = false; // 强制更新参数
-
+    
+    protected $is_set_params = false; // 是否直接设置 params
     protected $params = [];
     protected $params_head = [];
     protected $params_body = [];
@@ -97,6 +98,16 @@ class ModelEs implements ModelEsInterface
     }
 
     /**
+     * 设置 params, 包括 head + body，但是不包括 index
+     * @param array $input
+     */
+    public function setParams(array $input)
+    {
+        $this->is_set_params = true;
+        $this->params = $input;
+    }
+
+    /**
      * 自定义 head 字段，如：id, refresh
      *
      * @param $body
@@ -111,7 +122,7 @@ class ModelEs implements ModelEsInterface
     /**
      * 增加 index
      *
-     * @param $body
+     * @param $input
      */
     public function addIndex(array $input)
     {
@@ -266,22 +277,28 @@ class ModelEs implements ModelEsInterface
         if ($this->add_indexs) {
             $index .= ',' . implode(',', $this->add_indexs);
         }
-        $this->params['index'] = $index;
+        $array['index'] = $index;
         
         # set type
-        $this->params['type'] = $this->type;
-
-        # set head
-        if ($this->params_head) {
-            foreach ($this->params_head as $k => $v) {
-                $this->params[$k] = $v;
+        $array['type'] = $this->type;
+        
+        # 若 $is_set_params = true，则直接使用 $this->params，否则继续拼合 params_head + params_body
+        if (! $this->is_set_params) {
+            # set head
+            if ($this->params_head) {
+                foreach ($this->params_head as $k => $v) {
+                    $this->params[$k] = $v;
+                }
             }
-        }
 
-        # set body
-        if ($this->params_body) {
-            $this->params['body'] = $this->params_body;
+            # set body
+            if ($this->params_body) {
+                $this->params['body'] = $this->params_body;
+            }   
         }
+        
+        # merge
+        $this->params = array_merge($array, $this->params);
 
         return $this;
     }
@@ -303,6 +320,8 @@ class ModelEs implements ModelEsInterface
         
         # 创建 params
         $this->createParams();
+        
+        dd($this->params);
 
         # 获取结果
         $this->result = $this->model->$name($this->params);
