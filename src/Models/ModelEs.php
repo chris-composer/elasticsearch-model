@@ -320,8 +320,6 @@ class ModelEs implements ModelEsInterface
         
         # 创建 params
         $this->createParams();
-        
-        dd($this->params);
 
         # 获取结果
         $this->result = $this->model->$name($this->params);
