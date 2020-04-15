@@ -298,7 +298,7 @@ class ModelEs implements ModelEsInterface
         }
         
         # merge
-        $this->params = array_merge($array, $this->params);
+        $this->params = $array + $this->params;
 
         return $this;
     }
