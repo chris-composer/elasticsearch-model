@@ -36,7 +36,7 @@ class ModelEs implements ModelEsInterface
     protected $refresh = false; // 强制更新参数
     
     protected $is_set_params = false; // 是否直接设置 params
-    protected $params = [];
+    public $params = [];
     protected $params_head = [];
     protected $params_body = [];
 
@@ -74,16 +74,6 @@ class ModelEs implements ModelEsInterface
     }
 
     /**
-     * 设置 params, 包括 head + body，但是不包括 index
-     * @param array $input
-     */
-    public function setParams(array $input)
-    {
-        $this->is_set_params = true;
-        $this->params = $input;
-    }
-
-    /**
      * 自定义 head 字段，如：id, refresh
      *
      * @param $body
@@ -93,6 +83,16 @@ class ModelEs implements ModelEsInterface
         $this->params_head = $input;
 
         return $this;
+    }
+
+    /**
+     * 设置 params, 包括 head + body，但是不包括 index
+     * @param array $input
+     */
+    public function setParams(array $input)
+    {
+        $this->is_set_params = true;
+        $this->params = $input;
     }
     
     /**
@@ -245,7 +245,7 @@ class ModelEs implements ModelEsInterface
     /**
      * 创建 params
      */
-    protected function createParams()
+    public function createParams()
     {
         # set index
         $index = $this->config['prefix'] . $this->index;
