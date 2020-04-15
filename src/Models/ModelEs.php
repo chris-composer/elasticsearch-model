@@ -2,6 +2,7 @@
 
 namespace ElasticsearchModel\Models;
 
+use ElasticsearchModel\Server\EsServer;
 use ElasticsearchModel\Traits\CustomTransformTrait;
 use ElasticsearchModel\Interfaces\CustomTransformInterface;
 use ElasticsearchModel\Interfaces\ModelEsInterface;
@@ -54,35 +55,10 @@ class ModelEs implements ModelEsInterface
      */
     protected function connection()
     {
-        # 获取配置信息
-        if ($this->connection) {
-            $connection = $this->connection;
-        }
-        else {
-            $connection = config('elasticsearch.default');
-        }
-
-        $this->config = config('elasticsearch.connections.' . $connection);
-
-        # 设置 host
-        $this->model = ClientBuilder::create()
-            ->setHosts($this->config['hosts']);
-
-        # 设置多线程线程数
-        if ($this->max_handles) {
-            $handlerParams = [
-                'max_handles' => $this->max_handles
-            ];
-            $this->model->setHandler(ClientBuilder::defaultHandler($handlerParams));
-        }
-
-        # 设置重试次数
-        if ($this->retry) {
-            $this->model->setRetries($this->retry);
-        }
-
-        # 建立连接
-        $this->model = $this->model->build();
+        $this->model = EsServer::init($this->connection, [
+            'max_handles' => $this->max_handles,
+            'retry' => $this->retry,
+        ]);
     }
 
     /**
