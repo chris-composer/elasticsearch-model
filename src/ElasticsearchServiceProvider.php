@@ -1,6 +1,6 @@
 <?php
 
-namespace ElasticsearchModel;
+namespace ChrisComposer\ElasticsearchModel;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;

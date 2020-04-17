@@ -1,6 +1,6 @@
 <?php
 
-namespace ElasticsearchModel\Interfaces;
+namespace ChrisComposer\ElasticsearchModel\Interfaces;
 
 Interface CustomTransformInterface
 {

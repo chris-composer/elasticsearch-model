@@ -1,9 +1,9 @@
 <?php
 
-namespace ElasticsearchModel\Transformers;
+namespace ChrisComposer\ElasticsearchModel\Transformers;
 
 
-use ElasticsearchModel\Abstracts\CustomTransformAbstract;
+use ChrisComposer\ElasticsearchModel\Abstracts\CustomTransformAbstract;
 
 class TempCommonPaginationCustom extends CustomTransformAbstract
 {

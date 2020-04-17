@@ -1,9 +1,8 @@
 <?php
 
-namespace ElasticsearchModel\Traits;
+namespace ChrisComposer\ElasticsearchModel\Traits;
 
-
-use ElasticsearchModel\Interfaces\CustomTransformInterface;
+use ChrisComposer\ElasticsearchModel\Interfaces\CustomTransformInterface;
 
 Trait CustomTransformTrait
 {

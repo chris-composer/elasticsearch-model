@@ -1,11 +1,11 @@
 <?php
 
-namespace ElasticsearchModel\Models;
+namespace ChrisComposer\ElasticsearchModel\Models;
 
-use ElasticsearchModel\Server\EsServer;
-use ElasticsearchModel\Traits\CustomTransformTrait;
-use ElasticsearchModel\Interfaces\CustomTransformInterface;
-use ElasticsearchModel\Interfaces\ModelEsInterface;
+use ChrisComposer\ElasticsearchModel\Server\EsServer;
+use ChrisComposer\ElasticsearchModel\Traits\CustomTransformTrait;
+use ChrisComposer\ElasticsearchModel\Interfaces\CustomTransformInterface;
+use ChrisComposer\ElasticsearchModel\Interfaces\ModelEsInterface;
 use Elasticsearch\ClientBuilder;
 
 /**

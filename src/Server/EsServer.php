@@ -1,6 +1,6 @@
 <?php
 
-namespace ElasticsearchModel\Server;
+namespace ChrisComposer\ElasticsearchModel\Server;
 
 
 use Elasticsearch\ClientBuilder;

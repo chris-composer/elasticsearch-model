@@ -1,8 +1,8 @@
 <?php
 
-namespace ElasticsearchModel\Abstracts;
+namespace ChrisComposer\ElasticsearchModel\Abstracts;
 
-use ElasticsearchModel\Interfaces\CustomTransformInterface;
+use ChrisComposer\ElasticsearchModel\Interfaces\CustomTransformInterface;
 
 abstract class CustomTransformAbstract implements CustomTransformInterface
 {
