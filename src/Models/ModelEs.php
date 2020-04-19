@@ -93,6 +93,8 @@ class ModelEs implements ModelEsInterface
     {
         $this->is_set_params = true;
         $this->params = $input;
+
+        return $this;
     }
     
     /**
