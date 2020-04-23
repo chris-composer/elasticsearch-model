@@ -3,6 +3,7 @@
 namespace ChrisComposer\ElasticsearchModel;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
 class ElasticsearchServiceProvider extends ServiceProvider

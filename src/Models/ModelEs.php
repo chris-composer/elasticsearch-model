@@ -34,7 +34,7 @@ class ModelEs implements ModelEsInterface
     protected $max_handles = 100; // 批次大小
     protected $retry; // 重试次数，不设默认等于你集群的节点数
     protected $refresh = false; // 强制更新参数
-    
+
     protected $is_set_params = false; // 是否直接设置 params
     public $params = [];
     protected $params_head = [];
@@ -80,7 +80,9 @@ class ModelEs implements ModelEsInterface
      */
     public function setHead(array $input)
     {
-        $this->params_head = $input;
+        foreach ($input as $k => $v) {
+            $this->params_head[$k] = $v;
+        }
 
         return $this;
     }
@@ -96,7 +98,7 @@ class ModelEs implements ModelEsInterface
 
         return $this;
     }
-    
+
     /**
      * 增加 index
      *
@@ -256,10 +258,10 @@ class ModelEs implements ModelEsInterface
             $index .= ',' . implode(',', $this->add_indexs);
         }
         $array['index'] = $index;
-        
+
         # set type
         $array['type'] = $this->type;
-        
+
         # 若 $is_set_params = true，则直接使用 $this->params，否则继续拼合 params_head + params_body
         if (! $this->is_set_params) {
             # set head
@@ -272,9 +274,9 @@ class ModelEs implements ModelEsInterface
             # set body
             if ($this->params_body) {
                 $this->params['body'] = $this->params_body;
-            }   
+            }
         }
-        
+
         # merge
         $this->params = $array + $this->params;
 
@@ -289,13 +291,15 @@ class ModelEs implements ModelEsInterface
      */
     public function __call($name, $params)
     {
-        # 若是 get 方法，则 setHead()
-        if ($name === 'get') {
-            $this->setHead([
-                'id' => $params[0]
-            ]);
+        # 若是 get 方法 || delete 方法，若有传参，则使用作为设置 id
+        if ($name === 'get' || $name === 'delete') {
+            if ($params) {
+                $this->setHead([
+                    'id' => $params[0]
+                ]);
+            }
         }
-        
+
         # 创建 params
         $this->createParams();
 
