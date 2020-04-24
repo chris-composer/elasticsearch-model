@@ -6,6 +6,7 @@ use ChrisComposer\ElasticsearchModel\Server\EsServer;
 use ChrisComposer\ElasticsearchModel\Traits\CustomTransformTrait;
 use ChrisComposer\ElasticsearchModel\Interfaces\CustomTransformInterface;
 use ChrisComposer\ElasticsearchModel\Interfaces\ModelEsInterface;
+use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 
 /**
