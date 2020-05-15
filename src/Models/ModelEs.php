@@ -3,6 +3,7 @@
 namespace ChrisComposer\ElasticsearchModel\Models;
 
 use ChrisComposer\ElasticsearchModel\Server\EsServer;
+use ChrisComposer\ElasticsearchModel\Server\MergeParamServer;
 use ChrisComposer\ElasticsearchModel\Traits\CustomTransformTrait;
 use ChrisComposer\ElasticsearchModel\Interfaces\CustomTransformInterface;
 use ChrisComposer\ElasticsearchModel\Interfaces\ModelEsInterface;
@@ -245,6 +246,14 @@ class ModelEs implements ModelEsInterface
                 'field' => $field
             ]
         ];
+    }
+
+    /**
+     * 工厂实例：params 合成
+     */
+    public function factoryMergeParams()
+    {
+        return new MergeParamServer();
     }
 
     /**
